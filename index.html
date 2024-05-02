@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+<body>
+    <section>
+        <h1>Speech<br> Recognition</h1>
+        <!-- <p>Available In Chrome😎 Only hehe</p> -->
+        <div class="container">
+          <div class="texts">
+          </div>
+        </div>
+        <form action="" method="post">
+          <input type="text" name="solution" id="solution">
+          <button onclick="myfunc()" type="submit">submit</button>
+        </form>
+
+    </section>
+
+
+<!-- ========================= -->
+<script>
+        const arr = []; 
+        const texts = document.querySelector(".texts");
+
+window.SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
+
+const recognition = new SpeechRecognition();
+recognition.interimResults = true;
+
+let p = document.createElement("p");
+
+recognition.addEventListener("result", (e) => {
+  texts.appendChild(p);
+  const text = Array.from(e.results)
+    .map((result) => result[0])
+    .map((result) => result.transcript)
+    .join("");
+
+  p.innerText = text;
+    // p = document.createElement("p");
+  }
+);
+
+recognition.addEventListener("end", () => {
+    arr.push(p.innerText); 
+    p = document.createElement("p");
+  recognition.start();
+});
+
+recognition.start();
+
+function myfunc(){ 
+  console.log("enters"); 
+    const a = arr.join(" "); 
+    document.getElementById('solution').value = a; 
+    console.log(arr.length); 
+    console.log(arr); 
+    console.log(a); 
+    recognition.stop(); 
+}
+</script>
+</body>
+</html>
